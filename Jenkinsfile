@@ -83,6 +83,7 @@ pipeline {
                   pwd
                   cd Chapter08/sample1; 
                   ./gradlew checkstyleMain
+                  mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
                 '''
           } catch (Exception E) {
                 echo 'Oh no. Test FAIL!!!'
