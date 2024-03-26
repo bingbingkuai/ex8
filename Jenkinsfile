@@ -83,6 +83,7 @@ pipeline {
                   cd Chapter08/sample1
                   ./gradlew build
                   ./gradlew checkstyleMain
+                  echo 'I am on feature Jfile'
                   cp ./build/libs/calculator-0.0.1-SNAPSHOT.jar /app/calculator.jar
                   mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
                 '''
