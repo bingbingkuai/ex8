@@ -81,10 +81,9 @@ pipeline {
           try {
                 sh '''
                   cd Chapter08/sample1
-                  chmod +x gradlew
                   ./gradlew build
-                  
                   ./gradlew checkstyleMain
+                  cp ./build/libs/calculator-0.0.1-SNAPSHOT.jar /app/calculator.jar
                   mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
                 '''
           } catch (Exception E) {
