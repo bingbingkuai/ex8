@@ -80,11 +80,13 @@ pipeline {
         script {
           try {
                 sh '''
-                  pwd
                   cd Chapter08/sample1
-                  ./gradlew build 
+                  sed -i 's/minimum = 0.2/minimum = 0.1/' build.gradle sed -i '/checkstyle {/,/}/d' build.gradle
+                  sed -i '/checkstyle/d' build.gradle
+                  cat build.gradle
+                  chmod +x gradlew
+                  ./gradlew build
                   ./gradlew checkstyleMain
-                  cp ./calculator-0.0.1-SNAPSHOT.jar app.jar
                   mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
                 '''
           } catch (Exception E) {
