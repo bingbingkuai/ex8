@@ -79,12 +79,14 @@ pipeline {
         echo ' NOT on main branch'
         script {
           try {
+              container('gradle') {
                 sh '''
-                  pwd
                   cd Chapter08/sample1
+                  ./gradlew build
                   ./gradlew checkstyleMain
                   mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
                 '''
+					}
           } catch (Exception E) {
                 echo 'Oh no. Test FAIL!!!'
           }
@@ -125,7 +127,6 @@ pipeline {
             container('kaniko') {
             sh '''
                 echo "FROM openjdk:8-jre" > Dockerfile
-                cp ./calculator-0.0.1-SNAPSHOT.jar app.jar
                 echo "COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar" >> Dockerfile
                 echo "ENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]" >> Dockerfile
                 mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
