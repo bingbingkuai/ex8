@@ -81,6 +81,7 @@ pipeline {
           try {
                 sh '''
                   cd Chapter08/sample1
+                  chmod +x gradlew
                   ./gradlew build
                   
                   ./gradlew checkstyleMain
