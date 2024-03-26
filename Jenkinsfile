@@ -107,14 +107,10 @@ pipeline {
             container('kaniko') {
             sh '''
                 # Define base image name based on branch
-                def imageName ='calculator'
+                imageName ='calculator'
+                imageVersion = '1.0'
                 if (env.BRANCH_NAME == 'feature') {
                 imageName = 'calculator-feature'
-                }
-
-                # Define version based on branch
-                def imageVersion = '1.0'
-                if (env.BRANCH_NAME == 'feature') {
                 imageVersion = '0.1'
                 }
 
