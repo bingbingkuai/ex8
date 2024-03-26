@@ -82,7 +82,7 @@ pipeline {
                 sh '''
                   cd Chapter08/sample1
                   ./gradlew build
-                  ./gradlew test
+                  
                   ./gradlew checkstyleMain
                   mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
                 '''
@@ -127,6 +127,7 @@ pipeline {
             sh '''
                 echo "FROM openjdk:8-jre" > Dockerfile
                 cp ./build/libs/calculator-0.0.1-SNAPSHOT.jar /app/calculator.jar
+                echo "WORKDIR /app"
                 echo "COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar" >> Dockerfile
                 echo "ENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]" >> Dockerfile
                 mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
