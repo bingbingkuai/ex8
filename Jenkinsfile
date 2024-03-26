@@ -84,7 +84,7 @@ pipeline {
                   ./gradlew build
                   ./gradlew checkstyleMain
                   echo 'I am on feature Jfile'
-                  cp ./build/libs/calculator-0.0.1-SNAPSHOT.jar mnt/calculator.jar
+                  cp ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt/calculator.jar
                   #mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
                 '''
           } catch (Exception E) {
@@ -127,7 +127,7 @@ pipeline {
             container('kaniko') {
             sh '''
                 echo "FROM openjdk:8-jre" > Dockerfile
-                cp ./build/libs/calculator-0.0.1-SNAPSHOT.jar /app/calculator.jar
+                cp ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt/calculator.jar
                 echo "WORKDIR /app"
                 echo "COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar" >> Dockerfile
                 echo "ENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]" >> Dockerfile
