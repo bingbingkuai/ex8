@@ -107,15 +107,15 @@ pipeline {
             container('kaniko') {
             sh '''
                 # Define base image name based on branch
-                def imageName = "calculator"
+                def imageName ='calculator'
                 if (env.BRANCH_NAME == 'feature') {
-                imageName = "calculator-feature"
+                imageName = 'calculator-feature'
                 }
 
                 # Define version based on branch
-                def imageVersion = "1.0"
+                def imageVersion = '1.0'
                 if (env.BRANCH_NAME == 'feature') {
-                imageVersion = "0.1"
+                imageVersion = '0.1'
                 }
 
                 # Build Dockerfile with dynamic name and version
