@@ -102,31 +102,41 @@ pipeline {
     success {
         script {
         // Check for branch using environment variable or expression
-        if (env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'feature') {
-            echo 'Create container repository (on main or feature branch)'
+        if (env.BRANCH_NAME == 'main' ) {
+            echo 'Create container repository on main'
             container('kaniko') {
             sh '''
-                # Define base image name based on branch
-                imageName ='calculator'
-                imageVersion = '1.0'
-                if (env.BRANCH_NAME == 'feature') {
-                imageName = 'calculator-feature'
-                imageVersion = '0.1'
-                }
-
-                # Build Dockerfile with dynamic name and version
                 echo "FROM openjdk:8-jre" > Dockerfile
                 echo "COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar" >> Dockerfile
                 echo "ENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]" >> Dockerfile
                 mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
 
                 # Build and push image using Kaniko
-                /kaniko/executor --context `pwd` --destination ${imageName}:${imageVersion}
+                /kaniko/executor --context `pwd` --destination bingkuai8/calculator:1.0
             '''
             }
         } else {
-            echo 'Skipping container build (not on main or feature branch)'
+            echo 'Skipping container build (not on main)'
         }
+
+        if ( env.BRANCH_NAME == 'feature') {
+            echo 'Create container repository on feature branch'
+            container('kaniko') {
+            sh '''
+                echo "FROM openjdk:8-jre" > Dockerfile
+                echo "COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar" >> Dockerfile
+                echo "ENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]" >> Dockerfile
+                mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+
+                # Build and push image using Kaniko
+                /kaniko/executor --context `pwd` --destination bingkuai8/calculator-feature:0.1
+            '''
+            }
+        } else {
+            echo 'Skipping container build (not on feature branch)'
+        }
+
+
         }
     }
     }
